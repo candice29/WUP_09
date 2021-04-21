@@ -12,7 +12,17 @@ output:
 ```{r include=FALSE,echo=FALSE}
 require(tigerstats)
 require(tidyverse)
+require(car)
+Allfish <- read.csv(file = "Fish.csv")
+Allfish$Species <- as.factor(Allfish$Species)
+levels(Allfish$Species)
 ```
+
+```{r}
+Perch <- subset(Allfish, Species == "Perch")
+Perch <- select(Perch, -Species)
+```
+
 
 # Introduction
 
@@ -23,6 +33,39 @@ require(tidyverse)
 
 
 # Perch
+
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ .,
+               data = Perch,
+               nbest = 1,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
+```
+  
+From the plot above we see that the two best regression model is height and width. The model of height and width are the adjusted $r^2$ of about 0.9400.
+  
+##Which is best??  
+
+```{r}
+which.max(summary.out$adjr2)
+```
+```{r}
+summary.out$which[2,]
+```
+
+```{r}
+Perchmodel <- lm(Weight~Height+Width, data=Perch)
+summary.lm(Perchmodel)
+```
+
+Here we get that the adjusted $r^2$ is 0.9400 which is the best model because $r^2$ is the highest. The residual standard error is 85.17.
 
 # Bream
 
