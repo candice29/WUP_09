@@ -21,6 +21,10 @@ levels(Allfish$Species)
 ```{r}
 Perch <- subset(Allfish, Species == "Perch")
 Perch <- select(Perch, -Species)
+Bream <- subset(Allfish, Species == "Bream")
+Bream <- select(Bream, -Species)
+Smelt <- subset(Allfish, Species == "Smelt")
+Smelt <- select(Smelt, -Species)
 ```
 
 
@@ -68,6 +72,39 @@ summary.lm(Perchmodel)
 Here we get that the adjusted $r^2$ is 0.9400 which is the best model because $r^2$ is the highest. The residual standard error is 85.17.
 
 # Bream
+
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ .,
+               data = Bream,
+               nbest = 1,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
+```
+  
+From the plot above we see that the three best regression model is height, length1, and width. The model of height, length, and width are the adjusted $r^2$ of about 0.940.
+  
+##Which is best??  
+
+```{r}
+which.max(summary.out$adjr2)
+```
+```{r}
+summary.out$which[2,]
+```
+
+```{r}
+Breammodel <- lm(Weight~Height+Length2, data=Bream)
+summary.lm(Breammodel)
+```
+
+Here we get that the adjusted $r^2$ og height and length2 is 0.9356. The residual standard error is 53.1.
 
 # Smelt
 
