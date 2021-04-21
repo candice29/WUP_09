@@ -104,7 +104,48 @@ Breammodel <- lm(Weight~Height+Length2, data=Bream)
 summary.lm(Breammodel)
 ```
 
-Here we get that the adjusted $r^2$ og height and length2 is 0.9356. The residual standard error is 53.1.
+Here we get that the adjusted $r^2$ of height and length2 is 0.9356. The residual standard error is 53.1.
 
 # Smelt
+
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ .,
+               data = Smelt,
+               nbest = 1,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
+```
+  
+From the plot above we see that the best regression model is the model with height, length1, length2, and width. The model of height, length, and width are the adjusted $r^2$ of about 0.940.
+  
+##Which is best??  
+
+```{r}
+which.max(summary.out$adjr2)
+```
+```{r}
+summary.out$which[2,]
+```
+
+```{r}
+Smeltmodel <- lm(Weight~Length2+Width, data=Smelt)
+fullup <- lm(Weight~., data=Smelt)
+summary.lm(Smeltmodel)
+```
+
+Here we get that the adjusted $r^2$ of width and length2 is 0.965. The residual standard error is 0.7783.
+
+```{r}
+anova(fullup,Smeltmodel)
+```
+
+The pvalue is too large to say that there is a difference between the best model which utilizes four variables and the best model that uses two variables.
+
 
