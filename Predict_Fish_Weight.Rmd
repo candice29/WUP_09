@@ -136,21 +136,16 @@ summary.out$which[2,]
 
 ```{r}
 Smeltmodel <- lm(Weight~Length2+Width, data=Smelt)
-fullup <- lm(Weight~., data=Smelt)
 summary.lm(Smeltmodel)
 ```
 
 Here we get that the adjusted $r^2$ of width and length2 is 0.965. The residual standard error is 0.7783.
 
-```{r}
-anova(fullup,Smeltmodel)
-```
 
-The pvalue is too large to say that there is a difference between the best model which utilizes four variables and the best model that uses two variables.
 
 # Discussion and Conclusion 
 
-
+Based on the automated selection of variables there is no real difference in using a model with two variables versus using one with all of the variables. This was identified through each of our graphical depictions of the adjusted rsquared as well as the residual standard error.
 
 
 
