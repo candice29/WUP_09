@@ -148,4 +148,9 @@ anova(fullup,Smeltmodel)
 
 The pvalue is too large to say that there is a difference between the best model which utilizes four variables and the best model that uses two variables.
 
+# Discussion and Conclusion 
+
+
+
+
 
