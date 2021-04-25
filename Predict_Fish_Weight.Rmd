@@ -1,7 +1,7 @@
 ---
 title: "Weight of Fish"
 author: "Candice Fallon"
-date: "Spring 2021"
+date: "April 2021"
 output: 
   html_document:
     number_sections: true
@@ -145,7 +145,7 @@ Here we get that the adjusted $r^2$ of width and length2 is 0.965. The residual 
 
 # Discussion and Conclusion 
 
-Based on the automated selection of variables there is no real difference in using a model with two variables versus using one with all of the variables. This was identified through each of our graphical depictions of the adjusted rsquared as well as the residual standard error.
+Based on the automated selection of variables there is no real difference in using a model with two variables versus using one with all of the variables. The smelt model that we ran shows four variables as being the best model. This was identified through each of our graphical depictions of the adjusted r-squared as well as the residual standard error.
 
 
 
